@@ -1,0 +1,6 @@
+// Max volume stocks
+val stocks = sc.textFile("/user/osboxes/stocks-dataset")
+val splits = stocks.map(record => record.split(","))
+val symvol = splits.map(arr => (arr(1), arr(7).toInt))
+val maxvol = symvol.reduceByKey((vol1, vol2) => Math.max(vol1, vol2))
+maxvol.collect().foreach(println)
