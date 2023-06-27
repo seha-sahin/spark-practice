@@ -1,6 +1,7 @@
-// Max volume stocks
-val stocks = sc.textFile("/user/osboxes/stocks-dataset")
+// Max volume stocks by sector
+val path = "local/file/path"
+val stocks = sc.textFile(path)
 val splits = stocks.map(record => record.split(","))
-val symvol = splits.map(arr => (arr(1), arr(7).toInt))
-val maxvol = symvol.reduceByKey((vol1, vol2) => Math.max(vol1, vol2))
-maxvol.collect().foreach(println)
+val sectors = splits.map(row => (row(2), row(3).toInt))
+val maxprice = sectors.reduceByKey((price1, price2) => Math.max(price1, price2))
+maxprice.collect().foreach(println)
